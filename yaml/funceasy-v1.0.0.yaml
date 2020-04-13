@@ -222,6 +222,19 @@ spec:
   selector:
     app: funceasy-api
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: code-pv-claim
+  namespace: funceasy
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -256,10 +269,15 @@ spec:
           volumeMounts:
             - name: gateway-access
               mountPath: /gateway_access
+            - name: code-persistent-storage
+              mountPath: /uploadScripts
       volumes:
         - name: gateway-access
           secret:
             secretName: gateway-access
+        - name: code-persistent-storage
+          persistentVolumeClaim:
+            claimName: code-pv-claim
 ---
 apiVersion: v1
 kind: Service
