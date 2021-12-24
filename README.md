@@ -1,5 +1,5 @@
 # FuncEasy
-FuncEasy Release and Docs
+A Simple Serverless Framework Based on Kubernetes
 
 ## Design
 
